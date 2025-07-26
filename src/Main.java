@@ -7,15 +7,52 @@ public class Main {
 
     public static void main(String[] args) {
 
+        String ancestry = "CREATE TABLE IF NOT EXIST Ancestry(ancestry_name TEXT UNIQUE NOT NULL);" +
+                "INSERT INTO Ancestry(ancestry_name) VALUES" +
+                "('Dwarf'), ('Elf'), ('Gnome'), ('Goblin'), " +
+                "('Halfling'), ('Human'), ('Leshy'), ('Orc');";
 
-        String classFeatsQuery = "CREATE TABLE IF NOT EXISTS ClassFeats(" +
+        String skills = "CREATE TABLE IF NOT EXIST Skills(" +
+                "skill_name TEXT NOT NULL," +
+                "proficiency_rank ENUM('untrained', 'trained', 'expert', 'master', 'legendary') NOT NULL" +
+                ");";
+
+        String stats = "CREATE TABLE IF NOT EXIST Stats(" +
+                "stat_name TEXT NOT NULL," +
+                "ability_boost DECIMAL(2,1) NOT NULL" +
+                ");";
+
+        String classes = "CREATE TABLE IF NOT EXIST Class(class_name TEXT UNIQUE NOT NULL);" +
+                "INSERT INTO Class(class_name) VALUES" +
+                "('Bard'), ('Cleric'), ('Druid'), ('Fighter'), " +
+                "('Ranger'), ('Rogue'), ('Witch'), ('Wizard');";
+
+        String classFeats = "CREATE TABLE IF NOT EXISTS ClassFeats(" +
                 "name TEXT NOT NULL," +
-                "level INTEGER NOT NULL," +
-                "background TEXT" +
-                ""; //Working on at the moment
+                "level INT NOT NULL," +
+                "ancestry ancestry_name TEXT," +
+                "FOREIGN KEY (ancestry_name) REFERENCES Ancestry(ancestry_name)," +
+
+                "stats stat_name TEXT," +
+                "FOREIGN KEY (stat_name) REFERENCES Stats(stat_name)." +
+
+                "skills skill_name TEXT," +
+                "FOREIGN KEY (skill_name) REFERENCES Skills(skill_name)," +
+
+                "class class_name TEXT," +
+                "FOREIGN KEY (class_name) REFERENCES Class(class_name)," +
+
+                "requirement TEXT," +
+                "rarity ENUM('Common', 'Uncommon', 'Rare', 'Unique')," +
+                "traits TEXT," +
+                "description LONGTEXT" +
+                ");";
 
         String query = "SELECT * FROM ClassFeats";
 
+        System.out.println(skills);
+        System.out.println(stats);
+        System.out.println(classFeats);
     }
 
     private static void runQuery(final String theQuery){
