@@ -1,7 +1,7 @@
 import java.sql.*;
 
 public class Main {
-    private static final String url = "jdbc:mysql://127.0.0.1:3306/PF2E";
+    private static final String url = "jdbc:mysql://127.0.0.1:3306/PATH";
     private static final String user = "shelyn";
     private static final String password = "The Gardens of Shelyn";
 
@@ -23,22 +23,6 @@ public class Main {
             "INSERT INTO AbilityBoost(ability_boost) VALUES" +
             "(-1.0), (0.0), (1.0), (2.0), (3.0), (4.0), (4.5), (5.0), (5.5), (6.0);";
 
-    //ancestry of character
-    static String ancestrySchema =
-            "CREATE TABLE IF NOT EXISTS Ancestry(" +
-                "ancestry_name VARCHAR(32) UNIQUE NOT NULL, " + //Unique Name = No Level
-                "hit_points INT NOT NULL DEFAULT 0, " +
-                "size ENUM('tiny', 'small', 'medium', 'large', 'huge', 'gargantuan') NOT NULL, " +
-                "attribute_boost_1 ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') NOT NULL, " +
-                "attribute_boost_2 ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') DEFAULT NULL, " +
-                "attribute_flaw ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') DEFAULT NULL, " +
-                "languages VARCHAR(128) DEFAULT 'Common', " +
-                "ancestry_feature VARCHAR(32) DEFAULT NULL " +
-            ");" +
-            "INSERT INTO Ancestry(ancestry_name) VALUES " +
-            "('Dwarf'), ('Elf'), ('Gnome'), ('Goblin'), " +
-            "('Halfling'), ('Human'), ('Leshy'), ('Orc')" +
-            ";";
     //skills list
     static String skillSchema =
             "CREATE TABLE IF NOT EXiSTS Skill(" +
@@ -92,37 +76,6 @@ public class Main {
                     "AND ability_scores.ability_boost = boosts.ability_boost " +
             ");";
 
-    //class of character
-    static String classSchema = "CREATE TABLE IF NOT EXISTS Class(" +
-            "class_name VARCHAR(32) UNIQUE NOT NULL, " + //Unique Name = No Level
-            "hit_points INT NOT NULL DEFAULT 0, " +
-            "key_attribute ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') NOT NULL, " +
-
-            "class_feature VARCHAR(1028) DEFAULT NULL, " + //if class has subclass insert into class_feature
-
-            "perception_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "fortitude_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "reflex_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "will_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "trained_skills VARCHAR(128), " + //'arcana,nature,occultism,religion'
-            "unarmed_attacks ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "simple_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "martial_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "advanced_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "unarmored_defense ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "light_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "medium_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "heavy_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
-            "class_dc ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained'" +
-            "); " +
-
-            "INSERT INTO Class(class_name) VALUES" + //Player Core 1 and 2
-            "('Bard'), ('Cleric'), ('Druid'), ('Fighter'), " +
-            "('Ranger'), ('Rogue'), ('Witch'), ('Wizard')," +
-            "('Alchemist'), ('Barbarian'), ('Champion'), ('Investigator')," +
-            "('Monk'), ('Oracle'), ('Sorcerer'), ('Swashbuckler')" +
-            ";";
-
     //features list
     static String featureSchema =
             "CREATE TABLE IF NOT EXISTS Feature(" +
@@ -149,6 +102,58 @@ public class Main {
                 "WHERE feature_ranks.feature_name = features.feature_name " +
                 "AND feature_ranks.proficiency_rank = proficiencies.proficiency_rank " +
             ");";
+
+    //ancestry of character
+    static String ancestrySchema =
+            "CREATE TABLE IF NOT EXISTS Ancestry(" +
+                    "ancestry_name VARCHAR(32) UNIQUE NOT NULL, " + //Unique Name = No Level
+                    "hit_points INT NOT NULL DEFAULT 0, " +
+                    "size ENUM('tiny', 'small', 'medium', 'large', 'huge', 'gargantuan') NOT NULL, " +
+                    "attribute_boost_1 ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') NOT NULL, " +
+                    "attribute_boost_2 ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') DEFAULT NULL, " +
+                    "attribute_flaw ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') DEFAULT NULL, " +
+                    "languages VARCHAR(128) DEFAULT 'Common', " +
+                    "ancestry_feature VARCHAR(32) DEFAULT NULL " +
+                    ");" +
+                    "INSERT INTO Ancestry(ancestry_name) VALUES " +
+                    "('Dwarf'), ('Elf'), ('Gnome'), ('Goblin'), " +
+                    "('Halfling'), ('Human'), ('Leshy'), ('Orc')" +
+                    ";";
+
+
+    //class of character
+    static String classSchema = "CREATE TABLE IF NOT EXISTS Class(" +
+            "class_name VARCHAR(32) UNIQUE NOT NULL, " + //Unique Name = No Level
+            "hit_points INT NOT NULL DEFAULT 0, " +
+            "key_attribute ENUM('Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma') NOT NULL, " +
+
+            "class_feature VARCHAR(1028) DEFAULT NULL, " + //if class has subclass insert into class_feature
+
+            "perception_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "fortitude_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "reflex_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "will_proficiency ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "trained_skills VARCHAR(128), " + //'arcana,nature,occultism,religion'
+            "unarmed_attacks ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "simple_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "martial_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "advanced_weapons ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "unarmored_defense ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "light_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "medium_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "heavy_armor ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained', " +
+            "class_dc ENUM('untrained', 'trained', 'expert', 'master', 'legendary') DEFAULT 'trained'" +
+
+            //need to add FeatureRank table to Constraints
+            "); " +
+
+            "INSERT INTO Class(class_name) VALUES" + //Player Core 1 and 2
+            "('Bard'), ('Cleric'), ('Druid'), ('Fighter'), " +
+            "('Ranger'), ('Rogue'), ('Witch'), ('Wizard')," +
+            "('Alchemist'), ('Barbarian'), ('Champion'), ('Investigator')," +
+            "('Monk'), ('Oracle'), ('Sorcerer'), ('Swashbuckler')" +
+            ";";
+
 
     //class feats
     static String classFeatSchema =
@@ -222,10 +227,6 @@ public class Main {
                     "book VARCHAR(64) NOT NULL, " +
                     "page INT NOT NULL, " +
 
-                    //duplicate feats from 2 different classes or archetypes
-                    "ancestry_name VARCHAR(32) DEFAULT NULL, " +
-                    "class_name VARCHAR(32) DEFAULT NULL" +
-
                     "rarity ENUM('Common', 'Uncommon', 'Rare', 'Unique') DEFAULT 'Common', " +
                     "traits VARCHAR(128), " + //SELECT SUBSTRING_INDEX('flourish,press,concentrate', ',', 1);
                     "description TEXT, " +
@@ -267,6 +268,7 @@ public class Main {
             "CREATE TABLE IF NOT EXIST Archetype(" +
                 "name VARCHAR(32) NOT NULL UNIQUE, " +
                 "level INT NOT NULL, " +
+
                 "ancestry_name ENUM('Dwarf', 'Elf', 'Gnome', 'Goblin', 'Halfling', 'Human', 'Leshy', 'Orc') NOT NULL, " +
                 "ancestry_features VARCHAR(16), " + //like having permanent wings
                 "skill_name VARCHAR(32), " +
@@ -289,31 +291,21 @@ public class Main {
                 "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES Feature(feature_name, proficiency_rank)" +
             ");";
 
-    //queries
-    static String testQueries =
-            "SELECT * FROM Ancestry;\n" +
-            "SELECT * FROM Skill;\n" +
-            "SELECT * FROM Stat;\n" +
-            "SELECT * FROM Class;\n" +
-            "SELECT * FROM Feature;\n" +
-            "SELECT * FROM ClassFeat;\n" +
-            "SELECT * FROM Action;";
-
-    static String completeClassFeats =
-            "SELECT " +
-                    "ClassFeat.name, " +
-                    "ClassFeat.level, " +
-                    "GROUP_CONCAT(DISTINCT ClassFeat.class_name) AS classes, " +
-                    "Action.frequency, " +
-                    "Action.action, " +
-                    "Action.trigger," +
-                    "Action.requirement\n" +
-            "FROM ClassFeat\n" +
-            "JOIN Action ON ClassFeat.name = Action.name AND ClassFeat.level = Action.level\n" +
-            "GROUP BY ClassFeat.level, ClassFeat.name;";
-
 
     public static void main(String[] args) {
+        String completeClassFeatsQuery =
+                "SELECT " +
+                        "ClassFeat.name, " +
+                        "ClassFeat.level, " +
+                        "GROUP_CONCAT(DISTINCT ClassFeat.class_name) AS classes, " +
+                        "Action.frequency, " +
+                        "Action.action, " +
+                        "Action.trigger," +
+                        "Action.requirement\n" +
+                        "FROM ClassFeat\n" +
+                        "JOIN Action ON ClassFeat.name = Action.name AND ClassFeat.level = Action.level\n" +
+                        "GROUP BY ClassFeat.level, ClassFeat.name;";
+
         //testing schemas and queries
         System.out.println(proficiencySchema);
         System.out.println(abilityBoostSchema);
@@ -326,10 +318,13 @@ public class Main {
 
         System.out.println(classFeatSchema);
         System.out.println(actionSchema);
-        System.out.println();
-        System.out.println(completeClassFeats);
+        System.out.println(completeClassFeatsQuery);
     }
 
+    /**
+     * For running queries which return tuples
+     * @param theQuery
+     */
     private static void runQuery(final String theQuery){
         try(Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
@@ -340,7 +335,7 @@ public class Main {
 
             while(resultSet.next()){
                 for(int col = 1; col <= columnCount; col++) {
-                    System.out.print(metaData.getColumnName(col) + ": " + resultSet.getObject(col));
+                    System.out.print(metaData.getColumnName(col) + ": " + resultSet.getString(col));
                 }
             }
         } catch (SQLException e) {
@@ -349,7 +344,19 @@ public class Main {
         }
     }
 
-    //user buildQueries
+    /**
+     * Inserting and Altering tables
+     * @param theQuery
+     */
+    private static void runSchema(final String theQuery){
+        ;
+    }
+
+    /**
+     * Grabs information from certain tables in certain columns
+     * @param theTable
+     * @param theColumn
+     */
     private static void grabTuples(String theTable, String... theColumn){
         String query = "SELECT ";
 
