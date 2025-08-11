@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Sheet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+
+  <!-- DROPDOWN MENU SIDEBAR -->
+  <aside class="sidebar">
+    <div class="card">
+      <h3>Ancestry</h3>
+      <select id="ancestry">
+        <option value="">-- Select Ancestry --</option>
+        <option>Human</option>
+        <option>Elf</option>
+        <option>Dwarf</option>
+        <option>Gnome</option>
+        <option>Halfling</option>
+        <option>Orc</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h3>Background</h3>
+      <select id="background">
+        <option value="">-- Select Background --</option>
+        <option>Barkeep</option>
+        <option>Sailor</option>
+        <option>Scholar</option>
+        <option>Soldier</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h3>Class</h3>
+      <select id="class">
+        <option value="">-- Select Class --</option>
+        <option>Fighter</option>
+        <option>Wizard</option>
+        <option>Rogue</option>
+        <option>Cleric</option>
+        <option>Ranger</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h3>Level 1 Bonuses</h3>
+      <ul>
+        <li>
+          <label for="level1-abilities">Set Abilities:</label>
+          <select id="level1-abilities">
+            <option value="">-- Placeholder --</option>
+            <!-- FOR FUTURE TO CONNECT TO DATABASE -->
+          </select>
+        </li>
+        <li>
+          <label for="level1-skills">Skill Training:</label>
+          <select id="level1-skills">
+            <option value="">-- Placeholder --</option>
+            <!-- FOR FUTURE TO CONNECT TO DATABASE -->
+          </select>
+        </li>
+        <li>
+          <label for="level1-heritage">Heritage:</label>
+          <select id="level1-heritage">
+            <option value="">-- Placeholder --</option>
+            <!-- FOR FUTURE TO CONNECT TO DATA -->
+          </select>
+        </li>
+        <li>
+          <label for="level1-ancestry-feat">Ancestry Feat:</label>
+          <select id="level1-ancestry-feat">
+            <option value="">-- Placeholder --</option>
+            <!-- FOR FUTURE TO CONNECT TO DATA -->
+          </select>
+        </li>
+        <li>
+          <label for="level1-class-feat">Class Feat:</label>
+          <select id="level1-class-feat">
+            <option value="">-- Placeholder --</option>
+            <!-- FOR FUTURE TO CONNECT TO DATA -->
+          </select>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- MAIN BAR -->
+  <main class="main-content">
+
+    <!-- NAME + STATS -->
+    <section class="stats-header">
+      <div class="char-name">
+        <label for="charName">Name:</label>
+        <input type="text" id="charName" placeholder="Enter character name">
+      </div>
+      <div class="stats">
+        <div class="stat"><span>AC</span><strong id="ac">0</strong></div>
+        <div class="stat"><span>HP</span><strong id="hp">10/10</strong></div>
+        <div class="stat"><span>Fort</span><strong id="fortitude">+0</strong></div>
+        <div class="stat"><span>Ref</span><strong id="reflex">+0</strong></div>
+        <div class="stat"><span>Will</span><strong id="will">+0</strong></div>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <nav class="tabs">
+      <button data-tab="weapons">Weapons</button>
+      <button data-tab="defense">Defense</button>
+      <button data-tab="gear">Gear</button>
+      <button data-tab="spells">Spells</button>
+      <button data-tab="feats">Feats</button>
+      <button data-tab="actions">Actions</button>
+    </nav>
+
+    <!-- TAB CONTENT -->
+    <section id="weapons" class="tab-content active">
+      <h3>Weapons</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Attack Bonus</th>
+          <th>Damage</th>
+        </tr>
+        </thead>
+        <tbody id="weapons-list">
+        <tr>
+          <td>Place holder</td>
+          <td>Martial</td>
+          <td>+5</td>
+          <td>1d8+3</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="defense" class="tab-content">
+      <h3>Defense</h3>
+      <p>No shield equipped.</p>
+    </section>
+
+    <section id="gear" class="tab-content">
+      <h3>Gear</h3>
+      <p>Placeholder gear list...</p>
+    </section>
+
+    <section id="spells" class="tab-content">
+      <h3>Spells</h3>
+      <p>No spells known.</p>
+    </section>
+
+    <section id="feats" class="tab-content">
+      <h3>Feats</h3>
+      <p>Placeholder feats...</p>
+    </section>
+
+    <section id="actions" class="tab-content">
+      <h3>Actions</h3>
+      <p>Placeholder actions...</p>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills">
+      <h3>Skills</h3>
+      <ul id="skills-list">
+        <li>Acrobatics +0</li>
+        <li>Arcana +0</li>
+        <li>Athletics +0</li>
+        <li>Crafting +0</li>
+      </ul>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  // to switch tabs
+  const buttons = document.querySelectorAll('.tabs button');
+  const contents = document.querySelectorAll('.tab-content');
+
+  buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+          contents.forEach(c => c.classList.remove('active'));
+          document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+  });
+</script>
+</body>
+</html>
