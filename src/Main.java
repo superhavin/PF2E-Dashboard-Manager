@@ -7,31 +7,18 @@ public class Main {
     private final String user = "shelyn";
     private final String password = "The Gardens of Shelyn";
 
-    //proficiency
-    static String proficiencySchema =
-            "CREATE TABLE IF NOT EXiSTS Proficiency(" +
-                "proficiency_rank VARCHAR(32) UNIQUE NOT NULL, " +
-                "UNIQUE KEY Proficiency(proficiency_rank) " +
-            "); " +
-            "INSERT INTO Proficiency(proficiency_rank) VALUES " +
-            "('untrained'), ('trained'), ('expert'), ('master'), ('legendary');";
-
     static String sizeSchema =
             "CREATE TABLE IF NOT EXISTS Size(" +
                 "size_type VARCHAR(32) UNIQUE NOT NULL, " +
                 "UNIQUE KEY Size(size_type)" +
-            "); " +
-            "INSERT INTO Size(size_type) VALUES " +
-            "('tiny'), ('small'), ('medium'), ('large'), ('huge'), ('gargantuan');";
+            "); ";
 
     //ability boost
     static String abilityBoostSchema =
             "CREATE TABLE IF NOT EXISTS AbilityBoost(" +
                     "ability_boost DECIMAL(2,1) DEFAULT 0, " +
                     "UNIQUE KEY ability_boost(ability_boost)" +
-            ");" +
-            "INSERT INTO AbilityBoost(ability_boost) VALUES" +
-            "(-1.0), (0.0), (1.0), (2.0), (3.0), (4.0), (4.5), (5.0), (5.5), (6.0);";
+            ");";
 
 
     //ability list
@@ -40,9 +27,6 @@ public class Main {
                 "ability_name VARCHAR(32) NOT NULL, " +
                 "UNIQUE KEY Ability(ability_name) " +
             "); " +
-            "INSERT INTO Ability(ability_name) VALUES " +
-            "('Strength'), ('Dexterity'), ('Constitution'), " +
-            "('Intelligence'), ('Wisdom'), ('Charisma');" +
     //ability score list
             "CREATE TABLE IF NOT EXISTS AbilityScore(" +
                 "ability_name VARCHAR(32) NOT NULL, " +
@@ -50,17 +34,14 @@ public class Main {
                 "UNIQUE KEY ability_score(ability_name, ability_boost), " +
                 "FOREIGN KEY (ability_name) REFERENCES Ability(ability_name), " +
                 "FOREIGN KEY (ability_boost) REFERENCES AbilityBoost(ability_boost) " +
-            "); " +
-            "INSERT INTO AbilityScore(ability_name, ability_boost) " +
-                "SELECT abilities.ability_name, boosts.ability_boost " +
-                "FROM Ability abilities " +
-                "CROSS JOIN AbilityBoost boosts " +
-                "WHERE NOT EXISTS( " +
-                    "SELECT * FROM AbilityScore ability_scores " +
-                    "WHERE ability_scores.ability_name = abilities.ability_name " +
-                    "AND ability_scores.ability_boost = boosts.ability_boost " +
-                ")" +
-            ";";
+            "); ";
+
+    //proficiency
+    static String proficiencySchema =
+            "CREATE TABLE IF NOT EXiSTS Proficiency(" +
+                    "proficiency_rank VARCHAR(32) UNIQUE NOT NULL, " +
+                    "UNIQUE KEY Proficiency(proficiency_rank) " +
+                    "); ";
 
     //skills list
     static String skillSchema =
@@ -68,28 +49,13 @@ public class Main {
                 "skill_name VARCHAR(32) NOT NULL, " +
                 "UNIQUE KEY Skill(skill_name) " +
             ");" +
-            "INSERT INTO Skill(skill_name) " +
-                "VALUES('Acrobatics'), ('Arcana'), ('Athletics'), ('Crafting'), ('Deception'), " +
-                "('Diplomacy'), ('Intimidation'), ('Medicine'), ('Nature'), ('Occultism'), " +
-                "('Performance'), ('Religion'), ('Society'), ('Stealth'), ('Survival'), ('Thievery');" +
-
             "CREATE TABLE IF NOT EXISTS SkillRank(" +
                 "skill_name VARCHAR(32) NOT NULL, " +
                 "proficiency_rank VARCHAR(32) NOT NULL, " +
                 "UNIQUE KEY skill_rank(skill_name, proficiency_rank), " +
                 "FOREIGN KEY (skill_name) REFERENCES Skill(skill_name), " +
                 "FOREIGN KEY (proficiency_rank) REFERENCES Proficiency(proficiency_rank) " +
-            "); " +
-            "INSERT INTO SkillRank(skill_name, proficiency_rank) " +
-                "SELECT skills.skill_name, proficiencies.proficiency_rank " +
-                "FROM Skill skills " +
-                "CROSS JOIN Proficiency proficiencies " +
-                "WHERE NOT EXISTS( " +
-                    "SELECT * FROM SkillRank skill_ranks " +
-                    "WHERE skill_ranks.skill_name = skills.skill_name " +
-                    "AND skill_ranks.proficiency_rank = proficiencies.proficiency_rank " +
-                ")" +
-            ";";
+            "); ";
 
     //features list
     static String featureSchema =
@@ -97,34 +63,19 @@ public class Main {
                 "feature_name VARCHAR(32) UNIQUE NOT NULL, " +
                 "UNIQUE KEY Feature(feature_name) " +
             "); " +
-            "INSERT INTO Feature(feature_name) VALUES" +
-                "('martial weapons'), ('advanced weapons'), ('unarmed attacks'), ('spellcasting ability'), " +
-                "('unarmored defense'), ('light armor'), ('medium armor'), ('heavy armor'), " +
-                "('fortitude saves'), ('reflex saves'), ('will saves'), ('perception'), ('class dc')" +
-            ";" +
 
             "CREATE TABLE IF NOT EXISTS FeatureRank(" +
                 "feature_name VARCHAR(32) NOT NULL, " +
                 "proficiency_rank VARCHAR(32) NOT NULL, " +
                 "UNIQUE KEY FeatureRank(feature_name, proficiency_rank) " +
-            ");" +
-            "INSERT INTO FeatureRank(feature_name, proficiency_rank) " +
-                "SELECT features.feature_name, proficiencies.proficiency_rank " +
-                "FROM Feature features " +
-                "CROSS JOIN Proficiency proficiencies " +
-                "WHERE NOT EXISTS(" +
-                    "SELECT * FROM FeatureRank feature_ranks " +
-                    "WHERE feature_ranks.feature_name = features.feature_name " +
-                    "AND feature_ranks.proficiency_rank = proficiencies.proficiency_rank" +
-                ") " +
-            ";";
+            ");";
 
     //ancestry of character
     static String ancestrySchema =
             "CREATE TABLE IF NOT EXISTS Ancestry(" +
                 "ancestry_name VARCHAR(32) UNIQUE NOT NULL, " + //Unique Name = No Level
                 "hit_points INT NOT NULL DEFAULT 6, " +
-                "size VARCHAR(32), " +
+                "size VARCHAR(32) NOT NULL DEFAULT 'medium', " +
                 "speed INT DEFAULT 25, " +
                 "languages JSON, " + //'{"Common", "Orcish"}'
 
@@ -133,11 +84,6 @@ public class Main {
                 "UNIQUE KEY Ancestry(ancestry_name), " +
                 "FOREIGN KEY (size) REFERENCES Size(size_type) " +
             ");" +
-
-            "INSERT INTO Ancestry(ancestry_name) VALUES " +
-                "('Dwarf'), ('Elf'), ('Gnome'), ('Goblin'), " +
-                "('Halfling'), ('Human'), ('Leshy'), ('Orc')" +
-            ";" +
 
             "CREATE TABLE IF NOT EXISTS AncestryBoost(" +
                 "ancestry_name VARCHAR(32) NOT NULL, " +
@@ -206,13 +152,6 @@ public class Main {
                 "FOREIGN KEY (secondary_ability) REFERENCES Ability(ability_name)" +
             "); " +
 
-            "INSERT INTO Class(class_name, key_ability, secondary_ability) VALUES" + //Player Core 1 + Barbarian
-                "('Bard', 'Charisma', NULL), ('Cleric', 'Wisdom', NULL), ('Druid', 'Wisdom', NULL), ('Fighter', 'Strength', 'Dexterity'), " +
-                "('Ranger', 'Dexterity', 'Strength'), ('Rogue', 'Dexterity', NULL), ('Witch', 'Intelligence', NULL), ('Wizard', 'Intelligence', NULL), " +
-                //Rogue other ability score is special feature (using AlterTable)
-                "('Barbarian', 'Strength', NULL) " +
-            "; " +
-
             "CREATE TABLE IF NOT EXISTS ClassProficiency(" + //all features as Untrained, unless class specifies otherwise
                 "class_name VARCHAR(32) NOT NULL, " +
                 "feature_name VARCHAR(32) NOT NULL, " + //INSERT all features
@@ -247,7 +186,7 @@ public class Main {
                 "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES FeatureRank(feature_name, proficiency_rank) " +
             "); ";
 
-
+    //-----------↑Rules↑-----------------------------------------------------↓Character↓--------------------------------
     //tables of actions
     static String actionSchema =
             "CREATE TABLE IF NOT EXISTS Action(" +
@@ -262,20 +201,7 @@ public class Main {
                 "requirement TEXT DEFAULT NULL, " +
 
                 "CONSTRAINT action_title PRIMARY KEY (action_name, action_level)" +
-            ");" +
-    //insert actions into action table
-            "\n" +
-            "INSERT INTO Action(action_name, action_level, frequency, action, `trigger`, requirement) VALUES" +
-                "('Vicious Swing', 1, NULL, 'two-action', NULL, NULL), " +
-                "('Determination', 14, 'once per day', 'one-action', NULL, NULL), " +
-                "('Barreling Charge', 4, NULL, 'two-action', NULL, NULL), " +
-                "('Double Slice', 1, NULL, 'two-action', NULL, 'You are wielding a ranged weapon'), " +
-                "('Exacting Strike', 1, NULL, 'one-action', NULL, NULL), " +
-                "('Point Blank Stance', 1, NULL, 'one-action', NULL, 'You are wielding a ranged weapon'), " +
-                "('Reactive Shield', 1, NULL, 'reaction', 'An enemy hits you with a melee Strike', 'You are wielding a shield'), " +
-                "('Snagging Strike', 1, NULL, 'one-action', NULL, 'You have one hand free, and your target is within reach of that hand'), " +
-                "('Sudden Charge', 1, NULL, 'two-action', NULL, NULL)" +
-            ";";
+            ");";
 
     //tables of source, all things have sources
     static String sourceSchema =
@@ -335,23 +261,7 @@ public class Main {
                 "FOREIGN KEY (ability_name, ability_boost) REFERENCES AbilityScore(ability_name, ability_boost), " +
                 "FOREIGN KEY (skill_name, skill_proficiency) REFERENCES SkillRank(skill_name, proficiency_rank), " +
                 "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES FeatureRank(feature_name, proficiency_rank) " +
-            ");" +
-                //insert feats into class feat table
-                "\n" +
-            "INSERT INTO ClassFeat(feat_name, feat_level, class_name, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES" +
-                "('Vicious Swing', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Determination', 14, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Barreling Charge', 4, 'Fighter', NULL, NULL, 'Athletics', 'trained', NULL, NULL)," +
-                "('Barreling Charge', 4, 'Barbarian', NULL, NULL, 'Athletics', 'trained', NULL, NULL)," +
-                "('Double Slice', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Exacting Strike', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Point Blank Stance', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Reactive Shield', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Snagging Strike', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Sudden Charge', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Sudden Charge', 1, 'Barbarian', NULL, NULL, NULL, NULL, NULL, NULL)," +
-                "('Powerful Shove', 4, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)" +
-            ";";
+            ");";
 
     //ancestry feats
     static String ancestryFeatSchema =
@@ -444,6 +354,110 @@ public class Main {
                 "FOREIGN KEY (skill_name, skill_proficiency) REFERENCES SkillRank(skill_name, proficiency_rank), " +
                 "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES FeatureRank(feature_name, proficiency_rank) " +
             ");";
+
+    static String insertRuleSchemas =
+            "INSERT INTO Size(size_type) VALUES " +
+            "('tiny'), ('small'), ('medium'), ('large'), ('huge'), ('gargantuan');" +
+
+            "INSERT INTO AbilityBoost(ability_boost) VALUES" +
+            "(-1.0), (0.0), (1.0), (2.0), (3.0), (4.0), (4.5), (5.0), (5.5), (6.0);" +
+
+            "INSERT INTO Ability(ability_name) VALUES " +
+            "('Strength'), ('Dexterity'), ('Constitution'), " +
+            "('Intelligence'), ('Wisdom'), ('Charisma');" +
+
+            "INSERT INTO AbilityScore(ability_name, ability_boost) " +
+                "SELECT abilities.ability_name, boosts.ability_boost " +
+                "FROM Ability abilities " +
+                "CROSS JOIN AbilityBoost boosts " +
+                "WHERE NOT EXISTS( " +
+                    "SELECT * FROM AbilityScore ability_scores " +
+                    "WHERE ability_scores.ability_name = abilities.ability_name " +
+                    "AND ability_scores.ability_boost = boosts.ability_boost " +
+                ")" +
+            ";" +
+
+            "INSERT INTO Proficiency(proficiency_rank) VALUES " +
+            "('untrained'), ('trained'), ('expert'), ('master'), ('legendary');" +
+
+            "INSERT INTO Skill(skill_name) " +
+            "VALUES('Acrobatics'), ('Arcana'), ('Athletics'), ('Crafting'), ('Deception'), " +
+            "('Diplomacy'), ('Intimidation'), ('Medicine'), ('Nature'), ('Occultism'), " +
+            "('Performance'), ('Religion'), ('Society'), ('Stealth'), ('Survival'), ('Thievery');" +
+
+            "INSERT INTO SkillRank(skill_name, proficiency_rank) " +
+            "SELECT skills.skill_name, proficiencies.proficiency_rank " +
+            "FROM Skill skills " +
+            "CROSS JOIN Proficiency proficiencies " +
+                "WHERE NOT EXISTS( " +
+                    "SELECT * FROM SkillRank skill_ranks " +
+                    "WHERE skill_ranks.skill_name = skills.skill_name " +
+                    "AND skill_ranks.proficiency_rank = proficiencies.proficiency_rank " +
+                ")" +
+            ";" +
+
+            "INSERT INTO Feature(feature_name) VALUES" +
+            "('martial weapons'), ('advanced weapons'), ('unarmed attacks'), ('spellcasting ability'), " +
+            "('unarmored defense'), ('light armor'), ('medium armor'), ('heavy armor'), " +
+            "('fortitude saves'), ('reflex saves'), ('will saves'), ('perception'), ('class dc')" +
+            ";" +
+
+            "INSERT INTO FeatureRank(feature_name, proficiency_rank) " +
+            "SELECT features.feature_name, proficiencies.proficiency_rank " +
+            "FROM Feature features " +
+            "CROSS JOIN Proficiency proficiencies " +
+                "WHERE NOT EXISTS(" +
+                    "SELECT * FROM FeatureRank feature_ranks " +
+                    "WHERE feature_ranks.feature_name = features.feature_name " +
+                    "AND feature_ranks.proficiency_rank = proficiencies.proficiency_rank" +
+                ") " +
+            ";" +
+            /*skim default values thru insert*/
+            "INSERT INTO Ancestry(ancestry_name) VALUES " +
+            "('Dwarf'), ('Elf'), ('Gnome'), ('Goblin'), " +
+            "('Halfling'), ('Human'), ('Leshy'), ('Orc')" +
+            ";" +
+            /*skim default values thru insert*/
+            "INSERT INTO Class(class_name, key_ability, secondary_ability) VALUES" +
+            "('Bard', 'Charisma', NULL), ('Cleric', 'Wisdom', NULL), ('Druid', 'Wisdom', NULL), ('Fighter', 'Strength', 'Dexterity'), " +
+            "('Ranger', 'Dexterity', 'Strength'), ('Rogue', 'Dexterity', NULL), ('Witch', 'Intelligence', NULL), ('Wizard', 'Intelligence', NULL), " +
+            //Rogue other ability score is special feature (using AlterTable)
+            "('Barbarian', 'Strength', NULL) " + //Barbarian from Player Core 2
+            "; ";
+
+    static String insertCharacterSchemas =
+            /* ***
+             * ClassFeats
+             */
+            "INSERT INTO ClassFeat(feat_name, feat_level, class_name, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES" +
+                "('Vicious Swing', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Determination', 14, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Barreling Charge', 4, 'Fighter', NULL, NULL, 'Athletics', 'trained', NULL, NULL)," +
+                "('Barreling Charge', 4, 'Barbarian', NULL, NULL, 'Athletics', 'trained', NULL, NULL)," +
+                "('Double Slice', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Exacting Strike', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Point Blank Stance', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Reactive Shield', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Snagging Strike', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Sudden Charge', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Sudden Charge', 1, 'Barbarian', NULL, NULL, NULL, NULL, NULL, NULL)," +
+                "('Powerful Shove', 4, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL)" +
+            ";" +
+            /* Action for ClassFeats */
+            "INSERT INTO Action(action_name, action_level, frequency, action, `trigger`, requirement) VALUES" +
+            "('Vicious Swing', 1, NULL, 'two-action', NULL, NULL), " +
+            "('Determination', 14, 'once per day', 'one-action', NULL, NULL), " +
+            "('Barreling Charge', 4, NULL, 'two-action', NULL, NULL), " +
+            "('Double Slice', 1, NULL, 'two-action', NULL, 'You are wielding a ranged weapon'), " +
+            "('Exacting Strike', 1, NULL, 'one-action', NULL, NULL), " +
+            "('Point Blank Stance', 1, NULL, 'one-action', NULL, 'You are wielding a ranged weapon'), " +
+            "('Reactive Shield', 1, NULL, 'reaction', 'An enemy hits you with a melee Strike', 'You are wielding a shield'), " +
+            "('Snagging Strike', 1, NULL, 'one-action', NULL, 'You have one hand free, and your target is within reach of that hand'), " +
+            "('Sudden Charge', 1, NULL, 'two-action', NULL, NULL)" +
+            ";" +
+            /*Source for ClassFeats*/
+            ""
+            ;
 
     public static void main(String[] args) {
         String completeClassFeatsQuery = //our ideal class feat view
