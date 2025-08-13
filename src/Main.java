@@ -93,6 +93,7 @@ public class Main {
 
                 "CONSTRAINT optional_or_flaw CHECK(NOT(optional_ability & ability_flaw)), " +  //no setting untrained prof.
 
+                "UNIQUE KEY(ancestry_name, ability_name), " +
                 "FOREIGN KEY (ancestry_name) REFERENCES Ancestry(ancestry_name), " +
                 "FOREIGN KEY (ability_name) REFERENCES Ability(ability_name) " +
             "); " +
@@ -106,7 +107,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(feature_proficiency = 'untrained')), " +  //no setting untrained prof.
+                "CHECK(NOT(feature_proficiency = 'untrained')), " +  //no setting untrained prof.
 
                 "UNIQUE KEY AncestryHeritage(ancestry_name, heritage_name), " +
                 "FOREIGN KEY (ancestry_name) REFERENCES Ancestry(ancestry_name), " +
@@ -124,6 +125,7 @@ public class Main {
                 "background_name VARCHAR(32) NOT NULL, " +
                 "skill_name VARCHAR(32) NOT NULL, " +
                 "optional_skill BOOLEAN NOT NULL, " +
+
                 "UNIQUE KEY (background_name, skill_name), " +
                 "FOREIGN KEY (background_name) REFERENCES Background(background_name), " +
                 "FOREIGN KEY (skill_name) REFERENCES Skill(skill_name) " +
@@ -133,6 +135,7 @@ public class Main {
                 "background_name VARCHAR(32) NOT NULL, " +
                 "ability_boost VARCHAR(32) NOT NULL, " +
                 "alternative_boost BOOLEAN NOT NULL, " + //if it has custom boost
+
                 "UNIQUE KEY (background_name, ability_boost), " +
                 "FOREIGN KEY (background_name) REFERENCES Background(background_name), " +
                 "FOREIGN KEY (ability_boost) REFERENCES Ability(ability_name) " +
@@ -156,6 +159,8 @@ public class Main {
                 "class_name VARCHAR(32) NOT NULL, " +
                 "feature_name VARCHAR(32) NOT NULL, " + //INSERT all features
                 "feature_proficiency VARCHAR(32) DEFAULT 'untrained', " +
+
+                "UNIQUE KEY(class_name, feature_name), " +
                 "FOREIGN KEY (class_name) REFERENCES Class(class_name), " +
                 "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES FeatureRank(feature_name, proficiency_rank) " +
             "); " +
@@ -164,6 +169,8 @@ public class Main {
                 "class_name VARCHAR(32) NOT NULL, " +
                 "skill_name VARCHAR(32) NOT NULL, " +
                 "optional_skill BOOLEAN NOT NULL, " +
+
+                "UNIQUE KEY (class_name, skill_name), " +
                 "FOREIGN KEY (class_name) REFERENCES Class(class_name), " +
                 "FOREIGN KEY (skill_name) REFERENCES Skill(skill_name) " +
             "); " +
@@ -178,7 +185,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(feature_proficiency = 'untrained')), " +  //no setting untrained prof.
+                "CHECK(NOT(feature_proficiency = 'untrained')), " +  //no setting untrained prof.
 
                 "UNIQUE KEY ClassOption(class_name, option_level, class_option), " +
                 "FOREIGN KEY (class_name) REFERENCES Class(class_name), " +
@@ -254,7 +261,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
+                "CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
 
                 "CONSTRAINT class_feat_title PRIMARY KEY (feat_name, feat_level, class_name), " +
                 "FOREIGN KEY (class_name) REFERENCES Class(class_name), " +
@@ -277,7 +284,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
+                "CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
 
                 "CONSTRAINT ancestry_feat_title PRIMARY KEY (feat_name, feat_level, ancestry_name), " +
                 "FOREIGN KEY (ancestry_name) REFERENCES Ancestry(ancestry_name), " +
@@ -299,7 +306,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
+                "CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
 
                 "CONSTRAINT general_feat_title PRIMARY KEY (feat_name, feat_level), " +
                 "FOREIGN KEY (ability_name, ability_boost) REFERENCES AbilityScore(ability_name, ability_boost), " +
@@ -321,7 +328,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
+                "CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
 
                 "CONSTRAINT skill_feat_title PRIMARY KEY (feat_name, feat_level, skill_name), " +
                 "FOREIGN KEY (ability_name, ability_boost) REFERENCES AbilityScore(ability_name, ability_boost), " +
@@ -345,7 +352,7 @@ public class Main {
                 "feature_name VARCHAR(32) DEFAULT NULL, " +
                 "feature_proficiency VARCHAR(32) DEFAULT NULL, " +
 
-                "CONSTRAINT proficiency_not_untrained CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
+                "CHECK(NOT(skill_proficiency = 'untrained' OR feature_proficiency = 'untrained')), " +
 
                 "CONSTRAINT archetype_feat_title PRIMARY KEY (feat_name, feat_level), " +
                 "FOREIGN KEY (ancestry_name) REFERENCES Ancestry(ancestry_name), " +
