@@ -1,0 +1,134 @@
+body {
+    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+/* DROPDOWN MENU SIDEBAR */
+.sidebar {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.card select {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.card ul {
+    list-style: none;
+    padding-left: 5px;
+    margin: 0;
+}
+
+.card li {
+    font-size: 13px;
+}
+
+/* MAIN BAR */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* NAME + STATS */
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.char-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.char-name input {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.stats {
+    display: flex;
+    gap: 15px;
+}
+
+.stat span {
+    display: block;
+    font-size: 11px;
+    color: #666;
+}
+
+.stat strong {
+    font-size: 16px;
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    gap: 5px;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 8px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.tabs button:hover {
+    background: #bbb;
+}
+
+.tab-content {
+    display: none;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* SKILLS */
+.skills {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.skills ul {
+    list-style: none;
+    padding-left: 0;
+}
