@@ -15,12 +15,6 @@
       <h3>Ancestry</h3>
       <select id="ancestry">
         <option value="">-- Select Ancestry --</option>
-        <option>Human</option>
-        <option>Elf</option>
-        <option>Dwarf</option>
-        <option>Gnome</option>
-        <option>Halfling</option>
-        <option>Orc</option>
       </select>
     </div>
 
@@ -39,11 +33,6 @@
       <h3>Class</h3>
       <select id="class">
         <option value="">-- Select Class --</option>
-        <option>Fighter</option>
-        <option>Wizard</option>
-        <option>Rogue</option>
-        <option>Cleric</option>
-        <option>Ranger</option>
       </select>
     </div>
 
@@ -191,6 +180,51 @@
           document.getElementById(btn.dataset.tab).classList.add('active');
       });
   });
+
+  //fetch ancestries from database
+fetch("get_ancestries.php")
+   .then(res => res.json())
+  .then(data => {
+      const ancestrySelect = document.getElementById("ancestry");
+      data.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item.ancestry_name; // use actual column name
+          option.textContent = item.ancestry_name;
+          ancestrySelect.appendChild(option);
+      });
+  })
+  .catch(err => console.error("Error fetching ancestries:", err));
+
+ //fetch background from database
+fetch("get_background.php")
+   .then(res => res.json())
+  .then(data => {
+      const ancestrySelect = document.getElementById("background");
+      data.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item.background_name; // use actual column name
+          option.textContent = item.background_name;
+          ancestrySelect.appendChild(option);
+      });
+  })
+  .catch(err => console.error("Error fetching ancestries:", err));
+
+// Fetch class from database
+fetch("get_class.php")
+   .then(res => res.json())
+  .then(data => {
+      const ancestrySelect = document.getElementById("class");
+      data.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item.class_name; // use actual column name
+          option.textContent = item.class_name;
+          ancestrySelect.appendChild(option);
+      });
+  })
+  .catch(err => console.error("Error fetching ancestries:", err));
+
+
+
 </script>
 </body>
 </html>
