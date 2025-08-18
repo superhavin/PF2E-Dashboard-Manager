@@ -223,7 +223,7 @@ public class Main {
                     "id INT NOT NULL AUTO_INCREMENT, " +
                     "name VARCHAR(32) NOT NULL, " +
                     "level INT DEFAULT NULL, " + //if null, level = 0
-                    
+
                     "book VARCHAR(64) NOT NULL, " +
                     "page INT NOT NULL, " +
                     "description TEXT NOT NULL, " + //Descriptions which refer to other feats/spells, format it like this: 'Fireball'
@@ -392,243 +392,243 @@ public class Main {
                     "FOREIGN KEY (skill_name, skill_proficiency) REFERENCES SkillRank(skill_name, proficiency_rank), " +
                     "FOREIGN KEY (feature_name, feature_proficiency) REFERENCES FeatureRank(feature_name, proficiency_rank) " +
                     ");";
-    
+
     // -------------------- BASE DATA INSERTS (Rules) --------------------
 
     static String insertRuleSchemas =
             "INSERT INTO Size(size_type) VALUES " +
-                "('tiny'), ('small'), ('medium'), ('large'), ('huge'), ('gargantuan')" +
-            ";" +
+                    "('tiny'), ('small'), ('medium'), ('large'), ('huge'), ('gargantuan')" +
+                    ";" +
 
-            "INSERT INTO AbilityBoost(ability_boost) VALUES" +
-                "(-4.0), (-3.0), (-2.0), (-1.0), (0.0), (1.0), (2.0), " +
-                "(3.0), (4.0), (4.5), (5.0), (5.5), (6.0), (6.5), " +
-                "(7.0), (7.5), (8.0), (8.5), (9.0), (9.5)" +
-            ";" +
+                    "INSERT INTO AbilityBoost(ability_boost) VALUES" +
+                    "(-4.0), (-3.0), (-2.0), (-1.0), (0.0), (1.0), (2.0), " +
+                    "(3.0), (4.0), (4.5), (5.0), (5.5), (6.0), (6.5), " +
+                    "(7.0), (7.5), (8.0), (8.5), (9.0), (9.5)" +
+                    ";" +
 
-            "INSERT INTO Ability(ability_name) VALUES " +
-                "('Strength'), ('Dexterity'), ('Constitution'), " +
-                "('Intelligence'), ('Wisdom'), ('Charisma')" +
-            ";" +
+                    "INSERT INTO Ability(ability_name) VALUES " +
+                    "('Strength'), ('Dexterity'), ('Constitution'), " +
+                    "('Intelligence'), ('Wisdom'), ('Charisma')" +
+                    ";" +
 
-            "INSERT INTO AbilityScore(ability_name, ability_boost) " +
-                "SELECT abilities.ability_name, boosts.ability_boost " +
-                "FROM Ability abilities " +
-                "CROSS JOIN AbilityBoost boosts " +
-                "WHERE NOT EXISTS( " +
+                    "INSERT INTO AbilityScore(ability_name, ability_boost) " +
+                    "SELECT abilities.ability_name, boosts.ability_boost " +
+                    "FROM Ability abilities " +
+                    "CROSS JOIN AbilityBoost boosts " +
+                    "WHERE NOT EXISTS( " +
                     "SELECT * FROM AbilityScore ability_scores " +
                     "WHERE ability_scores.ability_name = abilities.ability_name " +
                     "AND ability_scores.ability_boost = boosts.ability_boost " +
-                ")" +
-            ";" +
+                    ")" +
+                    ";" +
 
-            "INSERT INTO Proficiency(proficiency_rank) VALUES " +
-                "('untrained'), ('trained'), ('expert'), ('master'), ('legendary')" +
-            ";" +
+                    "INSERT INTO Proficiency(proficiency_rank) VALUES " +
+                    "('untrained'), ('trained'), ('expert'), ('master'), ('legendary')" +
+                    ";" +
 
-            "INSERT INTO Skill(skill_name) VALUES" +
-                "('Acrobatics'), ('Arcana'), ('Athletics'), ('Crafting'), ('Deception'), " +
-                "('Diplomacy'), ('Intimidation'), ('Medicine'), ('Nature'), ('Occultism'), " +
-                "('Performance'), ('Religion'), ('Society'), ('Stealth'), ('Survival'), ('Thievery'), " +
+                    "INSERT INTO Skill(skill_name) VALUES" +
+                    "('Acrobatics'), ('Arcana'), ('Athletics'), ('Crafting'), ('Deception'), " +
+                    "('Diplomacy'), ('Intimidation'), ('Medicine'), ('Nature'), ('Occultism'), " +
+                    "('Performance'), ('Religion'), ('Society'), ('Stealth'), ('Survival'), ('Thievery'), " +
 
-                "('Academia Lore'), ('Accounting Lore'), ('Architecture Lore'), ('Art Lore'), ('Astronomy Lore'), " +
-                "('Carpentry Lore'), ('Circus Lore'), ('Driving Lore'), ('Engineering Lore'), ('Farming Lore'), " +
-                "('Fishing Lore'), ('Fortune-Telling Lore'), ('Games Lore'), ('Genealogy Lore'), ('Gladiatorial Lore'), " +
-                "('Guild Lore'), ('Heraldry Lore'), ('Herbalism Lore'), ('Hunting Lore'), ('Labor Lore'), " +
-                "('Legal Lore'), ('Library Lore'), " +
+                    "('Academia Lore'), ('Accounting Lore'), ('Architecture Lore'), ('Art Lore'), ('Astronomy Lore'), " +
+                    "('Carpentry Lore'), ('Circus Lore'), ('Driving Lore'), ('Engineering Lore'), ('Farming Lore'), " +
+                    "('Fishing Lore'), ('Fortune-Telling Lore'), ('Games Lore'), ('Genealogy Lore'), ('Gladiatorial Lore'), " +
+                    "('Guild Lore'), ('Heraldry Lore'), ('Herbalism Lore'), ('Hunting Lore'), ('Labor Lore'), " +
+                    "('Legal Lore'), ('Library Lore'), " +
 
-                "('Dwarfen Lore'), ('Elven Lore'), ('Goblin Lore'), ('Halfling Lore'), ('Leshy Lore'), ('Orc Lore'), " + //ancestries
+                    "('Dwarfen Lore'), ('Elven Lore'), ('Goblin Lore'), ('Halfling Lore'), ('Leshy Lore'), ('Orc Lore'), " + //ancestries
 
-                "('Abadar Lore'), ('Iomedae Lore'), " + //deities
+                    "('Abadar Lore'), ('Iomedae Lore'), " + //deities
 
-                "('Demon Lore'), ('Giant Lore'), ('Vampire Lore'), " + //creatures
+                    "('Demon Lore'), ('Giant Lore'), ('Vampire Lore'), " + //creatures
 
-                "('Astral Plane Lore'), ('Heaven Lore'), ('Outer Rifts Lore'), " + //planes
+                    "('Astral Plane Lore'), ('Heaven Lore'), ('Outer Rifts Lore'), " + //planes
 
-                "('Hellknights Lore'), ('Pathfinder Society Lore'), " + //organizations
+                    "('Hellknights Lore'), ('Pathfinder Society Lore'), " + //organizations
 
-                "('Absalom Lore'), ('Magnimar Lore'), " + //settlements
+                    "('Absalom Lore'), ('Magnimar Lore'), " + //settlements
 
-                "('Mountain Lore'), ('River Lore'), " + //terrains
+                    "('Mountain Lore'), ('River Lore'), " + //terrains
 
-                "('Alcohol Lore'), ('Baking Lore'), ('Butchering Lore'), ('Cooking Lore'), ('Tea Lore'), " + //items
+                    "('Alcohol Lore'), ('Baking Lore'), ('Butchering Lore'), ('Cooking Lore'), ('Tea Lore'), " + //items
 
-                "('Mercantile Lore'), ('Midwifery Lore'), ('Milling Lore'), " +
-                "('Mining Lore'), ('Piloting Lore'), ('Sailing Lore'), ('Scouting Lore'), ('Scribing Lore'), " +
-                "('Stabling Lore'), ('Tanning Lore'), ('Theater Lore'), ('Underworld Lore'), ('Warfare Lore')" +
-            ";" +
+                    "('Mercantile Lore'), ('Midwifery Lore'), ('Milling Lore'), " +
+                    "('Mining Lore'), ('Piloting Lore'), ('Sailing Lore'), ('Scouting Lore'), ('Scribing Lore'), " +
+                    "('Stabling Lore'), ('Tanning Lore'), ('Theater Lore'), ('Underworld Lore'), ('Warfare Lore')" +
+                    ";" +
 
-            "INSERT INTO SkillRank(skill_name, proficiency_rank) " +
-                "SELECT skills.skill_name, proficiencies.proficiency_rank " +
-                "FROM Skill skills " +
-                "CROSS JOIN Proficiency proficiencies " +
-                "WHERE NOT EXISTS( " +
+                    "INSERT INTO SkillRank(skill_name, proficiency_rank) " +
+                    "SELECT skills.skill_name, proficiencies.proficiency_rank " +
+                    "FROM Skill skills " +
+                    "CROSS JOIN Proficiency proficiencies " +
+                    "WHERE NOT EXISTS( " +
                     "SELECT * FROM SkillRank skill_ranks " +
                     "WHERE skill_ranks.skill_name = skills.skill_name " +
                     "AND skill_ranks.proficiency_rank = proficiencies.proficiency_rank " +
-                ")" +
-            ";" +
+                    ")" +
+                    ";" +
 
-            "INSERT INTO Feature(feature_name) VALUES" +
-                "('martial weapons'), ('simple weapons'), ('advanced weapons'), ('unarmed attacks'), ('spellcasting ability'), " +
-                "('unarmored defense'), ('light armor'), ('medium armor'), ('heavy armor'), " +
-                "('fortitude saves'), ('reflex saves'), ('will saves'), ('perception'), ('class dc')" +
-            ";" +
+                    "INSERT INTO Feature(feature_name) VALUES" +
+                    "('martial weapons'), ('simple weapons'), ('advanced weapons'), ('unarmed attacks'), ('spellcasting ability'), " +
+                    "('unarmored defense'), ('light armor'), ('medium armor'), ('heavy armor'), " +
+                    "('fortitude saves'), ('reflex saves'), ('will saves'), ('perception'), ('class dc')" +
+                    ";" +
 
-            "INSERT INTO FeatureRank(feature_name, proficiency_rank) " +
-                "SELECT features.feature_name, proficiencies.proficiency_rank " +
-                "FROM Feature features " +
-                "CROSS JOIN Proficiency proficiencies " +
-                "WHERE NOT EXISTS(" +
+                    "INSERT INTO FeatureRank(feature_name, proficiency_rank) " +
+                    "SELECT features.feature_name, proficiencies.proficiency_rank " +
+                    "FROM Feature features " +
+                    "CROSS JOIN Proficiency proficiencies " +
+                    "WHERE NOT EXISTS(" +
                     "SELECT * FROM FeatureRank feature_ranks " +
                     "WHERE feature_ranks.feature_name = features.feature_name " +
                     "AND feature_ranks.proficiency_rank = proficiencies.proficiency_rank" +
-                ") " +
-            ";";
+                    ") " +
+                    ";";
 
     // -------------------- CHARACTER CREATION INSERTS (Options) --------------------
 
-            static String insertAncestries =
-                "INSERT INTO Ancestry(ancestry_name, hit_points, size, speed, languages, vision) VALUES" +
-                        "('Dwarf', 10, 'medium', 25, JSON_ARRAY('Common', 'Dwarven'), 'dark'), " +
-                        "('Elf', 6, 'medium', 30, JSON_ARRAY('Common', 'Elven'), 'low-light'), " +
-                        "('Gnome', 8, 'small', 25, JSON_ARRAY('Common', 'Fey', 'Gnomish'), 'low-light'), " +
-                        "('Goblin', 6, 'small', 25, JSON_ARRAY('Common', 'Goblin'), 'dark'), " +
-                        "('Halfling', 6, 'small', 25, JSON_ARRAY('Common', 'Halfling'), NULL), " +
-                        "('Human', 8, 'medium', 25, JSON_ARRAY('Common'), NULL), " +
-                        "('Leshy', 8, 'small', 25, JSON_ARRAY('Common', 'Fey'), 'low-light'), " +
-                        "('Orc', 10, 'medium', 25, JSON_ARRAY('Common', 'Orcish'), 'dark')" +
-                ";" + 
-            /*
-             * AncestryBoost
-             */
-                "INSERT INTO AncestryBoost(ancestry_name, ability_name, ability_flaw) VALUES" + //every class gets an additional free boost
-                        "('Dwarf', 'Constitution', FALSE), " +
-                        "('Dwarf', 'Wisdom', FALSE), " +
-                        "('Dwarf', NULL, FALSE), " +
-                        "('Dwarf', 'Charisma', TRUE), " +
-                        "('Elf', 'Dexterity', FALSE), " +
-                        "('Elf', 'Intelligence', FALSE), " +
-                        "('Elf', NULL, FALSE), " +
-                        "('Elf', 'Constitution', TRUE), " +
-                        "('Gnome', 'Constitution', FALSE), " +
-                        "('Gnome', 'Charisma', FALSE), " +
-                        "('Gnome', NULL, FALSE), " +
-                        "('Gnome', 'Strength', TRUE), " +
-                        "('Goblin', 'Dexterity', FALSE), " +
-                        "('Goblin', 'Charisma', FALSE), " +
-                        "('Goblin', NULL, FALSE), " +
-                        "('Goblin', 'Wisdom', TRUE), " +
-                        "('Halfling', 'Dexterity', FALSE), " +
-                        "('Halfling', 'Wisdom', FALSE), " +
-                        "('Halfling', NULL, FALSE), " +
-                        "('Halfling', 'Strength', TRUE), " +
-                        "('Human', NULL, FALSE), " +
-                        "('Human', NULL, FALSE), " +
-                        "('Leshy', 'Constitution', FALSE), " +
-                        "('Leshy', 'Wisdom', FALSE), " +
-                        "('Leshy', NULL, FALSE), " +
-                        "('Leshy', 'Intelligence', TRUE), " +
-                        "('Orc', NULL, FALSE), " +
-                        "('Orc', NULL, FALSE)" +
-                ";" +
-            /*
-             * AncestryHeritage
-             */
-                "INSERT INTO AncestryHeritage(ancestry_name, heritage_name, reference_title, skill_name, feature_name, feature_proficiency) VALUES" +
-                        "('Orc', 'Badlands Orc', NULL, NULL, NULL, NULL), " +
-                        "('Orc', 'Battle-Ready Orc', JSON_OBJECT('GeneralFeat','Intimidating Glare'), 'Intimidation', NULL, NULL), " +
-                        "('Orc', 'Deep Orc', JSON_OBJECT('GeneralFeat', JSON_ARRAY('Terrain Expertise','Combat Climber')), NULL, NULL, NULL), " +
-                        "('Orc', 'Grave Orc', NULL, NULL, NULL, NULL), " +
-                        "('Orc', 'Hold-Scarred Orc', JSON_OBJECT('GeneralFeat','Diehard'), NULL, NULL, NULL), " + // 12 HP ancestry instead of 10
-                        "('Orc', 'Rainfall Orc', NULL, NULL, NULL, NULL), " +
-                        "('Orc', 'Winter Orc', NULL, 'Survival', NULL, NULL), " +
-                        "('Leshy', 'Cactus Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Fruit Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Fungus Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Gourd Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Leaf Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Lotus Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Root Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Leshy', 'Seaweed Leshy', NULL, NULL, NULL, NULL), " +
-                        "('Human', 'Skilled Human', JSON_OBJECT('AncestryFeat', 'General Training'), NULL, NULL, NULL), " +   // trained in one chosen skill (player choice -> NULL)
-                        "('Human', 'Versatile Human', JSON_OBJECT('GeneralFeat', 'Skill Training'), NULL, NULL, NULL), " + // choose a general feat (player choice -> NULL)
-                        "('Halfling', 'Gutsy Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Halfling', 'Hillock Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Halfling', 'Jinxed Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Halfling', 'Nomadic Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Halfling', 'Twilight Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Halfling', 'Wildwood Halfling', NULL, NULL, NULL, NULL), " +
-                        "('Goblin', 'Charhide Goblin', NULL, NULL, NULL, NULL), " +
-                        "('Goblin', 'Irongut Goblin', NULL, NULL, NULL, NULL), " +
-                        "('Goblin', 'Razortooth Goblin', NULL, NULL, NULL, NULL), " +
-                        "('Goblin', 'Snow Goblin', NULL, NULL, NULL, NULL), " +
-                        "('Goblin', 'Unbreakable Goblin', NULL, NULL, NULL, NULL), " +
-                        "('Gnome', 'Chameleon Gnome', NULL, NULL, NULL, NULL), " +
-                        "('Gnome', 'Fey-touched Gnome', NULL, NULL, NULL, NULL), " +
-                        "('Gnome', 'Sensate Gnome', NULL, NULL, NULL, NULL), " +
-                        "('Gnome', 'Umbral Gnome', NULL, NULL, NULL, NULL), " +
-                        "('Gnome', 'Wellspring Gnome', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Ancient Elf', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Arctic Elf', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Cavern Elf', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Seer Elf', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Whisper Elf', NULL, NULL, NULL, NULL), " +
-                        "('Elf', 'Woodland Elf', NULL, NULL, NULL, NULL), " +
-                        "('Dwarf', 'Ancient-Blooded Dwarf', NULL, NULL, NULL, NULL), " +
-                        "('Dwarf', 'Death Warden Dwarf', NULL, NULL, NULL, NULL), " +
-                        "('Dwarf', 'Forge Dwarf', NULL, NULL, NULL, NULL), " +
-                        "('Dwarf', 'Rock Dwarf', NULL, NULL, NULL, NULL), " +
-                        "('Dwarf', 'Strong-Blooded Dwarf', NULL, NULL, NULL, NULL)" +
-                ";";
-            
-            static String insertBackgrounds =
-                "INSERT INTO Background(background_name, reference_title, lore_name) VALUES" +
-                        "('Acolyte', JSON_OBJECT('GeneralFeat', 'Student of the Canon'), 'Scribing Lore'), " +
-                        "('Acrobat', JSON_OBJECT('GeneralFeat', 'Steady Balance'), 'Circus Lore'), " +
-                        "('Animal Whisperer', JSON_OBJECT('GeneralFeat', 'Train Animal'), NULL), " +
-                        "('Artisan', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Guild Lore'), " +
-                        "('Artist', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Art Lore'), " +
-                        "('Bandit', JSON_OBJECT('GeneralFeat', 'Group Coercion'), NULL), " +
-                        "('Barkeep', JSON_OBJECT('GeneralFeat', 'Hobnobber'), 'Alcohol Lore'), " +
-                        "('Barrister', JSON_OBJECT('GeneralFeat', 'Group Impression'), 'Legal Lore'), " +
-                        "('Bounty Hunter', JSON_OBJECT('GeneralFeat', 'Experienced Tracker'), 'Legal Lore'), " +
-                        "('Charlatan', JSON_OBJECT('GeneralFeat', 'Charming Liar'), 'Underworld Lore'), " +
-                        "('Cook', JSON_OBJECT('GeneralFeat', 'Seasoned'), 'Cooking Lore'), " +
-                        "('Criminal', JSON_OBJECT('GeneralFeat', 'Experienced Smuggler'), 'Underworld Lore'), " +
-                        "('Cultist', JSON_OBJECT('GeneralFeat', 'Schooled in Secrets'), 'Occultism'), " +
-                        "('Detective', JSON_OBJECT('GeneralFeat', 'Streetwise'), 'Underworld Lore'), " +
-                        "('Emissary', JSON_OBJECT('GeneralFeat', 'Multilingual'), NULL), " +
-                        "('Entertainer', JSON_OBJECT('GeneralFeat', 'Fascinating Performance'), 'Theater Lore'), " +
-                        "('Farmhand', JSON_OBJECT('GeneralFeat', 'Assurance'), 'Farming Lore'), " +
-                        "('Field Medic', JSON_OBJECT('GeneralFeat', 'Battle Medicine'), 'Medicine'), " +
-                        "('Fortune Teller', JSON_OBJECT('GeneralFeat', 'Oddity Identification'), 'Fortune-Telling Lore'), " +
-                        "('Gambler', JSON_OBJECT('GeneralFeat', 'Lie to Me'), 'Games Lore'), " +
-                        "('Gladiator', JSON_OBJECT('GeneralFeat', 'Impressive Performance'), 'Gladiatorial Lore'), " +
-                        "('Guard', JSON_OBJECT('GeneralFeat', 'Quick Coercion'), NULL), " +
-                        "('Herbalist', JSON_OBJECT('GeneralFeat', 'Natural Medicine'), 'Herbalism Lore'), " +
-                        "('Hermit', JSON_OBJECT('GeneralFeat', 'Dubious Knowledge'), NULL), " +
-                        "('Hunter', JSON_OBJECT('GeneralFeat', 'Survey Wildlife'), 'Tanning Lore'), " +
-                        "('Laborer', JSON_OBJECT('GeneralFeat', 'Hefty Hauler'), 'Labor Lore'), " +
-                        "('Martial Disciple', JSON_OBJECT('GeneralFeat', 'Cat Fall, Quick Jump'), NULL), " +
-                        "('Merchant', JSON_OBJECT('GeneralFeat', 'Bargain Hunter'), 'Mercantile Lore'), " +
-                        "('Miner', JSON_OBJECT('GeneralFeat', 'Terrain Expertise'), 'Mining Lore'), " +
-                        "('Noble', JSON_OBJECT('GeneralFeat', 'Courtly Graces'), NULL), " +
-                        "('Nomad', JSON_OBJECT('GeneralFeat', 'Assurance'), NULL), " +
-                        "('Prisoner', JSON_OBJECT('GeneralFeat', 'Experienced Smuggler'), 'Underworld Lore'), " +
-                        "('Raised by Belief', JSON_OBJECT('GeneralFeat', 'Assurance'), NULL), " +
-                        "('Sailor', JSON_OBJECT('GeneralFeat', 'Underwater Marauder'), 'Sailing Lore'), " +
-                        "('Scholar', JSON_OBJECT('GeneralFeat', 'Assurance'), 'Academia Lore'), " +
-                        "('Scout', JSON_OBJECT('GeneralFeat', 'Forager'), NULL), " +
-                        "('Street Urchin', JSON_OBJECT('GeneralFeat', 'Pickpocket'), NULL), " +
-                        "('Teacher', JSON_OBJECT('GeneralFeat', 'Experienced Professional'), 'Academia Lore'), " +
-                        "('Tinker', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Engineering Lore'), " +
-                        "('Warrior', JSON_OBJECT('GeneralFeat', 'Intimidating Glare'), 'Warfare Lore') " +
-                ";" +
-            /*
-             * BackgroundSkill
-             */
-                "INSERT INTO BackgroundSkill(background_name, skill_name, additional_skill) VALUES" +
+    static String insertAncestries =
+            "INSERT INTO Ancestry(ancestry_name, hit_points, size, speed, languages, vision) VALUES" +
+                    "('Dwarf', 10, 'medium', 25, JSON_ARRAY('Common', 'Dwarven'), 'dark'), " +
+                    "('Elf', 6, 'medium', 30, JSON_ARRAY('Common', 'Elven'), 'low-light'), " +
+                    "('Gnome', 8, 'small', 25, JSON_ARRAY('Common', 'Fey', 'Gnomish'), 'low-light'), " +
+                    "('Goblin', 6, 'small', 25, JSON_ARRAY('Common', 'Goblin'), 'dark'), " +
+                    "('Halfling', 6, 'small', 25, JSON_ARRAY('Common', 'Halfling'), NULL), " +
+                    "('Human', 8, 'medium', 25, JSON_ARRAY('Common'), NULL), " +
+                    "('Leshy', 8, 'small', 25, JSON_ARRAY('Common', 'Fey'), 'low-light'), " +
+                    "('Orc', 10, 'medium', 25, JSON_ARRAY('Common', 'Orcish'), 'dark')" +
+                    ";" +
+                    /*
+                     * AncestryBoost
+                     */
+                    "INSERT INTO AncestryBoost(ancestry_name, ability_name, ability_flaw) VALUES" + //every class gets an additional free boost
+                    "('Dwarf', 'Constitution', FALSE), " +
+                    "('Dwarf', 'Wisdom', FALSE), " +
+                    "('Dwarf', NULL, FALSE), " +
+                    "('Dwarf', 'Charisma', TRUE), " +
+                    "('Elf', 'Dexterity', FALSE), " +
+                    "('Elf', 'Intelligence', FALSE), " +
+                    "('Elf', NULL, FALSE), " +
+                    "('Elf', 'Constitution', TRUE), " +
+                    "('Gnome', 'Constitution', FALSE), " +
+                    "('Gnome', 'Charisma', FALSE), " +
+                    "('Gnome', NULL, FALSE), " +
+                    "('Gnome', 'Strength', TRUE), " +
+                    "('Goblin', 'Dexterity', FALSE), " +
+                    "('Goblin', 'Charisma', FALSE), " +
+                    "('Goblin', NULL, FALSE), " +
+                    "('Goblin', 'Wisdom', TRUE), " +
+                    "('Halfling', 'Dexterity', FALSE), " +
+                    "('Halfling', 'Wisdom', FALSE), " +
+                    "('Halfling', NULL, FALSE), " +
+                    "('Halfling', 'Strength', TRUE), " +
+                    "('Human', NULL, FALSE), " +
+                    "('Human', NULL, FALSE), " +
+                    "('Leshy', 'Constitution', FALSE), " +
+                    "('Leshy', 'Wisdom', FALSE), " +
+                    "('Leshy', NULL, FALSE), " +
+                    "('Leshy', 'Intelligence', TRUE), " +
+                    "('Orc', NULL, FALSE), " +
+                    "('Orc', NULL, FALSE)" +
+                    ";" +
+                    /*
+                     * AncestryHeritage
+                     */
+                    "INSERT INTO AncestryHeritage(ancestry_name, heritage_name, reference_title, skill_name, feature_name, feature_proficiency) VALUES" +
+                    "('Orc', 'Badlands Orc', NULL, NULL, NULL, NULL), " +
+                    "('Orc', 'Battle-Ready Orc', JSON_OBJECT('GeneralFeat','Intimidating Glare'), 'Intimidation', NULL, NULL), " +
+                    "('Orc', 'Deep Orc', JSON_OBJECT('GeneralFeat', JSON_ARRAY('Terrain Expertise','Combat Climber')), NULL, NULL, NULL), " +
+                    "('Orc', 'Grave Orc', NULL, NULL, NULL, NULL), " +
+                    "('Orc', 'Hold-Scarred Orc', JSON_OBJECT('GeneralFeat','Diehard'), NULL, NULL, NULL), " + // 12 HP ancestry instead of 10
+                    "('Orc', 'Rainfall Orc', NULL, NULL, NULL, NULL), " +
+                    "('Orc', 'Winter Orc', NULL, 'Survival', NULL, NULL), " +
+                    "('Leshy', 'Cactus Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Fruit Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Fungus Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Gourd Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Leaf Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Lotus Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Root Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Leshy', 'Seaweed Leshy', NULL, NULL, NULL, NULL), " +
+                    "('Human', 'Skilled Human', JSON_OBJECT('AncestryFeat', 'General Training'), NULL, NULL, NULL), " +   // trained in one chosen skill (player choice -> NULL)
+                    "('Human', 'Versatile Human', JSON_OBJECT('GeneralFeat', 'Skill Training'), NULL, NULL, NULL), " + // choose a general feat (player choice -> NULL)
+                    "('Halfling', 'Gutsy Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Halfling', 'Hillock Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Halfling', 'Jinxed Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Halfling', 'Nomadic Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Halfling', 'Twilight Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Halfling', 'Wildwood Halfling', NULL, NULL, NULL, NULL), " +
+                    "('Goblin', 'Charhide Goblin', NULL, NULL, NULL, NULL), " +
+                    "('Goblin', 'Irongut Goblin', NULL, NULL, NULL, NULL), " +
+                    "('Goblin', 'Razortooth Goblin', NULL, NULL, NULL, NULL), " +
+                    "('Goblin', 'Snow Goblin', NULL, NULL, NULL, NULL), " +
+                    "('Goblin', 'Unbreakable Goblin', NULL, NULL, NULL, NULL), " +
+                    "('Gnome', 'Chameleon Gnome', NULL, NULL, NULL, NULL), " +
+                    "('Gnome', 'Fey-touched Gnome', NULL, NULL, NULL, NULL), " +
+                    "('Gnome', 'Sensate Gnome', NULL, NULL, NULL, NULL), " +
+                    "('Gnome', 'Umbral Gnome', NULL, NULL, NULL, NULL), " +
+                    "('Gnome', 'Wellspring Gnome', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Ancient Elf', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Arctic Elf', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Cavern Elf', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Seer Elf', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Whisper Elf', NULL, NULL, NULL, NULL), " +
+                    "('Elf', 'Woodland Elf', NULL, NULL, NULL, NULL), " +
+                    "('Dwarf', 'Ancient-Blooded Dwarf', NULL, NULL, NULL, NULL), " +
+                    "('Dwarf', 'Death Warden Dwarf', NULL, NULL, NULL, NULL), " +
+                    "('Dwarf', 'Forge Dwarf', NULL, NULL, NULL, NULL), " +
+                    "('Dwarf', 'Rock Dwarf', NULL, NULL, NULL, NULL), " +
+                    "('Dwarf', 'Strong-Blooded Dwarf', NULL, NULL, NULL, NULL)" +
+                    ";";
+
+    static String insertBackgrounds =
+            "INSERT INTO Background(background_name, reference_title, lore_name) VALUES" +
+                    "('Acolyte', JSON_OBJECT('GeneralFeat', 'Student of the Canon'), 'Scribing Lore'), " +
+                    "('Acrobat', JSON_OBJECT('GeneralFeat', 'Steady Balance'), 'Circus Lore'), " +
+                    "('Animal Whisperer', JSON_OBJECT('GeneralFeat', 'Train Animal'), NULL), " +
+                    "('Artisan', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Guild Lore'), " +
+                    "('Artist', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Art Lore'), " +
+                    "('Bandit', JSON_OBJECT('GeneralFeat', 'Group Coercion'), NULL), " +
+                    "('Barkeep', JSON_OBJECT('GeneralFeat', 'Hobnobber'), 'Alcohol Lore'), " +
+                    "('Barrister', JSON_OBJECT('GeneralFeat', 'Group Impression'), 'Legal Lore'), " +
+                    "('Bounty Hunter', JSON_OBJECT('GeneralFeat', 'Experienced Tracker'), 'Legal Lore'), " +
+                    "('Charlatan', JSON_OBJECT('GeneralFeat', 'Charming Liar'), 'Underworld Lore'), " +
+                    "('Cook', JSON_OBJECT('GeneralFeat', 'Seasoned'), 'Cooking Lore'), " +
+                    "('Criminal', JSON_OBJECT('GeneralFeat', 'Experienced Smuggler'), 'Underworld Lore'), " +
+                    "('Cultist', JSON_OBJECT('GeneralFeat', 'Schooled in Secrets'), 'Occultism'), " +
+                    "('Detective', JSON_OBJECT('GeneralFeat', 'Streetwise'), 'Underworld Lore'), " +
+                    "('Emissary', JSON_OBJECT('GeneralFeat', 'Multilingual'), NULL), " +
+                    "('Entertainer', JSON_OBJECT('GeneralFeat', 'Fascinating Performance'), 'Theater Lore'), " +
+                    "('Farmhand', JSON_OBJECT('GeneralFeat', 'Assurance'), 'Farming Lore'), " +
+                    "('Field Medic', JSON_OBJECT('GeneralFeat', 'Battle Medicine'), 'Medicine'), " +
+                    "('Fortune Teller', JSON_OBJECT('GeneralFeat', 'Oddity Identification'), 'Fortune-Telling Lore'), " +
+                    "('Gambler', JSON_OBJECT('GeneralFeat', 'Lie to Me'), 'Games Lore'), " +
+                    "('Gladiator', JSON_OBJECT('GeneralFeat', 'Impressive Performance'), 'Gladiatorial Lore'), " +
+                    "('Guard', JSON_OBJECT('GeneralFeat', 'Quick Coercion'), NULL), " +
+                    "('Herbalist', JSON_OBJECT('GeneralFeat', 'Natural Medicine'), 'Herbalism Lore'), " +
+                    "('Hermit', JSON_OBJECT('GeneralFeat', 'Dubious Knowledge'), NULL), " +
+                    "('Hunter', JSON_OBJECT('GeneralFeat', 'Survey Wildlife'), 'Tanning Lore'), " +
+                    "('Laborer', JSON_OBJECT('GeneralFeat', 'Hefty Hauler'), 'Labor Lore'), " +
+                    "('Martial Disciple', JSON_OBJECT('GeneralFeat', 'Cat Fall, Quick Jump'), NULL), " +
+                    "('Merchant', JSON_OBJECT('GeneralFeat', 'Bargain Hunter'), 'Mercantile Lore'), " +
+                    "('Miner', JSON_OBJECT('GeneralFeat', 'Terrain Expertise'), 'Mining Lore'), " +
+                    "('Noble', JSON_OBJECT('GeneralFeat', 'Courtly Graces'), NULL), " +
+                    "('Nomad', JSON_OBJECT('GeneralFeat', 'Assurance'), NULL), " +
+                    "('Prisoner', JSON_OBJECT('GeneralFeat', 'Experienced Smuggler'), 'Underworld Lore'), " +
+                    "('Raised by Belief', JSON_OBJECT('GeneralFeat', 'Assurance'), NULL), " +
+                    "('Sailor', JSON_OBJECT('GeneralFeat', 'Underwater Marauder'), 'Sailing Lore'), " +
+                    "('Scholar', JSON_OBJECT('GeneralFeat', 'Assurance'), 'Academia Lore'), " +
+                    "('Scout', JSON_OBJECT('GeneralFeat', 'Forager'), NULL), " +
+                    "('Street Urchin', JSON_OBJECT('GeneralFeat', 'Pickpocket'), NULL), " +
+                    "('Teacher', JSON_OBJECT('GeneralFeat', 'Experienced Professional'), 'Academia Lore'), " +
+                    "('Tinker', JSON_OBJECT('GeneralFeat', 'Specialty Crafting'), 'Engineering Lore'), " +
+                    "('Warrior', JSON_OBJECT('GeneralFeat', 'Intimidating Glare'), 'Warfare Lore') " +
+                    ";" +
+                    /*
+                     * BackgroundSkill
+                     */
+                    "INSERT INTO BackgroundSkill(background_name, skill_name, additional_skill) VALUES" +
                     "('Acolyte', 'Religion', FALSE), " +
                     "('Acrobat', 'Acrobatics', FALSE), " +
                     "('Animal Whisperer', 'Nature', FALSE), " +
@@ -672,11 +672,11 @@ public class Main {
                     "('Teacher', 'Society', FALSE), " +
                     "('Tinker', 'Crafting', FALSE), " +
                     "('Warrior', 'Intimidation', FALSE) " +
-                ";" +
-            /*
-             * BackgroundBoost
-             */
-                "INSERT INTO BackgroundBoost(background_name, ability_boost) VALUES" + //every background gets an additional free boost
+                    ";" +
+                    /*
+                     * BackgroundBoost
+                     */
+                    "INSERT INTO BackgroundBoost(background_name, ability_boost) VALUES" + //every background gets an additional free boost
                     "('Acolyte', 'Intelligence'), ('Acolyte', 'Wisdom'), " +
                     "('Acrobat', 'Strength'), ('Acrobat', 'Dexterity'), " +
                     "('Animal Whisperer', 'Wisdom'), ('Animal Whisperer', 'Charisma'), " +
@@ -717,10 +717,10 @@ public class Main {
                     "('Teacher', 'Intelligence'), ('Teacher', 'Wisdom'), " +
                     "('Tinker', 'Dexterity'), ('Tinker', 'Intelligence'), " +
                     "('Warrior', 'Strength'), ('Warrior', 'Constitution') " +
-                ";";
+                    ";";
 
-            static String insertClasses = 
-                "INSERT INTO Class(class_name, key_ability, secondary_ability, hit_points, additional_skills) VALUES" +
+    static String insertClasses =
+            "INSERT INTO Class(class_name, key_ability, secondary_ability, hit_points, additional_skills) VALUES" +
                     "('Bard', 'Charisma', NULL, 8, 4), " +
                     "('Cleric', 'Wisdom', NULL, 8, 2), " +
                     "('Druid', 'Wisdom', NULL, 8, 2), " +
@@ -730,11 +730,11 @@ public class Main {
                     "('Witch', 'Intelligence', NULL, 6, 3), " +
                     "('Wizard', 'Intelligence', NULL, 6, 2), " +
                     "('Barbarian', 'Strength', NULL, 12, 3)" +
-                "; " +
-            /*
-             * ClassProficiency
-             */
-                "INSERT INTO ClassProficiency(class_name, feature_name, feature_proficiency) VALUES " +
+                    "; " +
+                    /*
+                     * ClassProficiency
+                     */
+                    "INSERT INTO ClassProficiency(class_name, feature_name, feature_proficiency) VALUES " +
                     "('Fighter', 'perception', 'expert'), " +
                     "('Fighter', 'spellcasting ability', DEFAULT), " +
                     "('Fighter', 'class dc', 'trained'), " +
@@ -749,11 +749,11 @@ public class Main {
                     "('Fighter', 'fortitude saves', 'expert'), " +
                     "('Fighter', 'reflex saves', 'expert'), " +
                     "('Fighter', 'will saves', 'trained')" +
-                ";" +
-            /*
-             * ClassSkill
-             */
-                "INSERT INTO ClassSkill(class_name, skill_name, additional_skill) VALUES" +
+                    ";" +
+                    /*
+                     * ClassSkill
+                     */
+                    "INSERT INTO ClassSkill(class_name, skill_name, additional_skill) VALUES" +
                     "('Bard', 'Occultism', FALSE), " +
                     "('Bard', 'Performance', TRUE), " +
                     "('Cleric', 'Religion', FALSE), " +
@@ -765,11 +765,11 @@ public class Main {
                     "('Rogue', 'Stealth', FALSE), " +
                     "('Wizard', 'Arcana', FALSE), " +
                     "('Barbarian', 'Athletics', FALSE) " +
-                ";" +
-            /*
-             * ClassOption
-             */
-                "INSERT INTO ClassOption(class_name, option_level, class_option, reference_title, trained_skills, feature_name, feature_proficiency) VALUES" +
+                    ";" +
+                    /*
+                     * ClassOption
+                     */
+                    "INSERT INTO ClassOption(class_name, option_level, class_option, reference_title, trained_skills, feature_name, feature_proficiency) VALUES" +
                     "('Bard', 1, 'Enigma', NULL, NULL, NULL, NULL), " +
                     "('Bard', 1, 'Maestro', NULL, NULL, NULL, NULL), " +
                     "('Bard', 1, 'Polymath', NULL, NULL, NULL, NULL), " +
@@ -805,7 +805,7 @@ public class Main {
                     "('Wizard', 1, 'Spell Blending', NULL, NULL, NULL, NULL), " +
                     "('Wizard', 1, 'Spell Substitution', NULL, NULL, NULL, NULL), " +
                     "('Wizard', 1, 'Staff Nexus', NULL, NULL, NULL, NULL) " +
-                ";";
+                    ";";
 
     static String insertFeats =
             /*
@@ -876,10 +876,10 @@ public class Main {
                     "('Very Sneaky', 1, 'Goblin', NULL, NULL, NULL, NULL, NULL, NULL)," +
                     "('Watchful Halfling', 1, 'Halfling', NULL, NULL, NULL, NULL, NULL, NULL) " +
                     ";" +
-            /*
-             * GeneralFeats and SkillFeats; [WIP] Bad Constraints for ability_name/skill_name
-             */
-            "INSERT INTO GeneralFeat(feat_name, feat_level, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES" +
+                    /*
+                     * GeneralFeats and SkillFeats; [WIP] Bad Constraints for ability_name/skill_name
+                     */
+                    "INSERT INTO GeneralFeat(feat_name, feat_level, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES" +
                     "('Additional Lore', 1, NULL, NULL, NULL, NULL, NULL, NULL), " + //player picks a Lore; proficiency left NULL
                     "('Adopted Ancestry', 1, NULL, NULL, NULL, NULL, NULL, NULL)," +
                     //"('Alchemical Crafting', 1, NULL, NULL, 'Crafting', 'trained', NULL, NULL)," +
@@ -948,15 +948,15 @@ public class Main {
 //                    "('Virtuosic Performer', 1, NULL, NULL, 'Performance', 'trained', NULL, NULL)," +
                     "('Weapon Proficiency', 1, NULL, NULL, NULL, NULL, NULL, NULL)" +
                     ";" +
-            "INSERT INTO SkillFeat(feat_name, feat_level, skill_name, skill_proficiency, ability_name, ability_boost, feature_name, feature_proficiency) " +
+                    "INSERT INTO SkillFeat(feat_name, feat_level, skill_name, skill_proficiency, ability_name, ability_boost, feature_name, feature_proficiency) " +
                     "SELECT feat_name, feat_level, skill_name, skill_proficiency, ability_name, ability_boost, feature_name, feature_proficiency " +
                     "FROM GeneralFeat " +
                     "WHERE skill_name IS NOT NULL" +
                     ";" +
-            /*
-             * ClassFeats
-             */
-            "INSERT INTO ClassFeat(feat_name, feat_level, class_name, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES " +
+                    /*
+                     * ClassFeats
+                     */
+                    "INSERT INTO ClassFeat(feat_name, feat_level, class_name, ability_name, ability_boost, skill_name, skill_proficiency, feature_name, feature_proficiency) VALUES " +
                     "('Aggressive Block', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL), " +
                     "('Brutish Shove', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL), " +
                     "('Combat Assessment', 1, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL), " +
@@ -983,7 +983,7 @@ public class Main {
                     "('Sleek Reposition', 2, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL), " +
                     "('Powerful Shove', 4, 'Fighter', NULL, NULL, NULL, NULL, NULL, NULL), " +
                     "('Slam Down', 4, 'Fighter', NULL, NULL, 'Athletics', 'trained', NULL, NULL) " +
-            ";";
+                    ";";
     static String insertActions =
             "INSERT INTO Action(action_name, action_level, frequency, action, `trigger`, requirement) VALUES " +
                     "('Aggressive Block', 1, NULL, 'reaction', 'You use the Shield Block reaction, and the opponent that triggered Shield Block is adjacent to you and is your size or smaller', NULL), " +
@@ -1011,8 +1011,8 @@ public class Main {
                     "('Rebounding Toss', 2, NULL, 'two-action', NULL, NULL), " +
                     "('Sleek Reposition', 2, NULL, 'free-action', NULL, NULL), " +
                     "('Slam Down', 4, NULL, 'two-action', NULL, NULL) " +
-            ";";
-    static String insertSources =        
+                    ";";
+    static String insertSources =
             /*Source for Feats, need to source the ancestry/general feats; the ancestries, classes, and background*/
             "INSERT INTO Source(name, level, book, page, description, rarity, traits, prerequisites) VALUES" +
                     "('Aggressive Block', 1, 'Player Core', 144, 'When you block, you also push the enemy away.', DEFAULT, JSON_ARRAY('Fighter','Press'), NULL), " +
@@ -1041,7 +1041,7 @@ public class Main {
                     "('Sleek Reposition', 2, 'Player Core', 148, 'Move into perfect position after a Strike.', DEFAULT, JSON_ARRAY('Fighter','Press'), NULL)," +
                     "('Powerful Shove', 4, 'Player Core', 143, 'You can push larger foes around with your attack. You can use Aggressive Block or Brutish Shove against a creature up to two sizes larger than you.\nWhen a creature you Shove or knock back with a shield, polearm, or club’s critical specialization effect has to stop moving because it would hit an object, it takes damage equal to your Strength modifier (minimum 1).', DEFAULT, JSON_ARRAY('Fighter', 'Press'), JSON_OBJECT('ClassFeat', JSON_ARRAY('Aggressive Block', 'Brutish Shove')))," +
                     "('Slam Down', 4, 'Player Core', 143, 'You make an attack to knock a foe off balance, then follow up immediately with a sweep to topple them. Make a melee Strike. If it hits and deals damage, you can attempt an Athletics check to Trip the creature you hit. If you’re wielding a two-handed melee weapon, you can ignore Trip’s requirement that you have a hand free. Both attacks count toward your multiple attack penalty, but the penalty doesn’t increase until after you’ve made both of them.', DEFAULT, JSON_ARRAY('Fighter', 'Flourish'), JSON_OBJECT('Skill','Athletics','Proficiency','trained'))" +
-            ";";
+                    ";";
 
 
     //static String uniqueSchema; //class-based tables for unique abilities //Rage is an action, Rage is from Barbarian at level 1
@@ -1067,16 +1067,16 @@ public class Main {
                         "ON ClassFeat.feat_name = Actions.action_name AND ClassFeat.feat_level = Actions.action_level \n" +
                         "ORDER BY ClassFeat.feat_level, ClassFeat.feat_name;";
 
-        try{
-            for(Field field : Main.class.getDeclaredFields()){
-                if(Modifier.isStatic(field.getModifiers()) && field.getType().equals(String.class)){
+        try {
+            for (Field field : Main.class.getDeclaredFields()) {
+                if (Modifier.isStatic(field.getModifiers()) && field.getType().equals(String.class)) {
                     String value = (String) field.get(null);
                     //System.out.println("+++ " + field.getName() + " +++");
                     System.out.println(value);
                     //System.out.println();
                 }
             }
-        }catch (IllegalAccessException exception){
+        } catch (IllegalAccessException exception) {
             exception.printStackTrace();
         }
     }
