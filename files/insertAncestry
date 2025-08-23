@@ -1,0 +1,9 @@
+ancestry_name,hit_points,size,speed,languages,vision
+Dwarf,10,medium,25,"['Common','Dwarven']",dark
+Elf,6,medium,30,"['Common','Elven']","low-light"
+Gnome,8,small,25,"['Common','Fey','Gnomish']","low-light"
+Goblin,6,small,25,"['Common','Goblin']",dark
+Halfling,6,small,25,"['Common','Halfling']",
+Human,8,medium,25,"['Common']",
+Leshy,8,small,25,"['Common','Fey']","low-light"
+Orc,10,medium,25,"['Common','Orcish']",dark

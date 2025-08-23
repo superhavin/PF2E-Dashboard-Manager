@@ -1,91 +1,47 @@
-import java.lang.reflect.Parameter;
-import java.sql.*;
-
 interface AbstractConnector {
 
     /**
-     * Grabs a table from the purposes of a dropdown menu.
-     * @param theTable the name of the Table.
-     * @return a collection for dropdown menu.
+     * Turns a Json Array to an array of Objects.
+     * @param jsonArrayAttribute a JSON_ARRAY from an attribute.
+     * @return an array from JSON resultSet of statement.
      */
-    String[] grabDropdownMenu(final String theTable);
+    public Object[] toJsonArray(final String jsonArrayAttribute); //Takes JSON_ARRAY{"Common", "Elven"}
 
     /**
-     * Takes (by invalidating) away options from a dropdown menu.
-     * @param theTable the name of the Table.
-     * @param theOption the name of the Option.
-     * @return status of limitation.
-     * true if able to invalidate.
-     * false if unable to invalidate.
+     * Turns a Json Object to an 2D array of Objects.
+     * @param jsonObjectAttribute a JSON_OBJECT from an attribute.
+     * @return an 2D array from JSON resultSet of statement.
      */
-    boolean limitMenu(final String theTable, final String theOption);
+    public Object[][] toJsonObject(final String jsonObjectAttribute); //Takes JSON_OBJECT{"Table", "ClassFeat"}
 
     /**
-     * Runs a schema into the database.
-     * @param theQuery string of the query.
+     * Class for the reference_title JSON attributes.
      */
-    void runSchema(final String theQuery);
+    abstract class Reference{
+        final Object tableName;
+        final Object[] referenceTitle;
 
-
-    /**
-     * For running queries which return tuples (into System)
-     * @param theQuery string of the query.
-     * @param theDatabase connection to the database.
-     */
-    private static String[] runQuery(final String theQuery, Connection theDatabase){
-        String[] queryData;
-        try(Connection connection = theDatabase;
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(theQuery)) {
-
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            queryData = new String[columnCount];
-
-            while(resultSet.next()){
-                for(int col = 1; col <= queryData.length; col++) {
-                    int i = col - 1;
-                    //System.out.print(metaData.getColumnName(col) + ": " + resultSet.getString(col));
-                    queryData[i] = resultSet.getString(col);
-                }
-            }
-
-            //return queryData;
-        } catch (SQLException e) {
-            queryData = null;
-            e.printStackTrace();
-            System.exit(0);
-        }
-        return queryData;
-    }
-
-    /**
-     * Grabs information from certain tables in certain columns
-     * @param theTable th
-     * @param theColumn
-     */
-    private static void grabTuples(final String theTable, final Connection theDatabase, final String... theColumn) throws SQLException {
-
-        String query = "SELECT ";
-
-        for(int i = 0; i < theColumn.length; i++){
-            if((i+1) < theColumn.length){
-                query += "?,";
-            }else{
-                query += "?";
-            }
+        Reference(final Object tableName, final Object referenceTitle){
+            this.tableName = tableName;
+            this.referenceTitle = new Object[]{referenceTitle};
         }
 
-        query += " FROM " + theTable + ";";
-
-        PreparedStatement param = theDatabase.prepareStatement(query);
-
-        for(int col = 1; col <= theColumn.length; col++){
-            int i = col - 1;
-            param.setString(col, theColumn[i]);
+        Reference(final Object tableName, final Object... referenceTitle){
+            this.tableName = tableName;
+            this.referenceTitle = referenceTitle;
         }
 
-        runQuery(query, theDatabase);
+        /**
+         * Return the first element in the array
+         * @return A SELECT statement from the Table with the specific reference
+         */
+        abstract String returnReferenceToTable();
+
+        /**
+         * Sets an array from the Table
+         * @param setTableToReference Sets the array to the #referenceTitel
+         */
+        abstract void setReferencesToTable(Object[] setTableToReference);
     }
 }
+
